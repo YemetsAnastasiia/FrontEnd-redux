@@ -15,8 +15,9 @@ import { feedbackAction, feedbackSelectors } from "store/redux/feedback/feedback
 
 function Feedback() {
   //11
-  const feedbackLike = useAppSelector(feedbackSelectors.feedbackLikesValue)
-  const feedbackDeslike = useAppSelector(feedbackSelectors.feedbackDislikeValue)
+  /* const feedbackLike = useAppSelector(feedbackSelectors.fedbackLike)
+  const feedbackDeslike = useAppSelector(feedbackSelectors.feedbackDislake) */
+  const { likes, dislikes } = useAppSelector(feedbackSelectors.feedbackData);
 
   //12
   const dispatch = useAppDispatch()
@@ -38,11 +39,11 @@ function Feedback() {
     <FeedbackContainer>
       <FeedbackResultContainer>
         <LikeDislikeContainer>
-          <Result>{feedbackLike}</Result>
+          <Result>{likes}</Result>
           <Button name="LIKE" type="button" onClick={onLike} />
         </LikeDislikeContainer>
         <LikeDislikeContainer>
-          <Result>{feedbackDeslike}</Result>
+          <Result>{dislikes}</Result>
           <Button name="DISLIKE" type="button" onClick={onDislike} />
         </LikeDislikeContainer>
       </FeedbackResultContainer>

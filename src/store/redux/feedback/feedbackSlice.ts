@@ -16,12 +16,17 @@ export const feedbackSlice = createAppSlice(
         reducers: create => ({
             like: create.reducer((state: FeedbackStateSlice) => { state.likes = state.likes + 1}),
             dislikes: create.reducer((state:FeedbackStateSlice ) => {state.dislikes = state.dislikes + 1}),
-            reset : create.reducer((state: FeedbackStateSlice)=> {state.likes = 0, state.dislikes = 0} ) 
+            /* reset : create.reducer((state: FeedbackStateSlice)=> {state.likes = 0, state.dislikes = 0} ) */
+            // аналог - чтобы не переписывать каждое свойство, а сразу вернуться в первоначальное состояние 
+            reset : create.reducer(() => feedbackInitialState)
         }),
         //6
         selectors: {
-            feedbackLikesValue: (state: FeedbackStateSlice) => state.likes,
-            feedbackDislikeValue : (state: FeedbackStateSlice) => state.dislikes
+         /*    feedbackLikesValue: (state: FeedbackStateSlice) => state.likes,
+            feedbackDislikeValue : (state: FeedbackStateSlice) => state.dislikes */
+           // упрощение когда несколько свойств
+           // возвращаем сразу весь объект, и уже в компаненте забираем отдельные свойства 
+           feedbackData : (state: FeedbackStateSlice) => state
         }
     })
 
