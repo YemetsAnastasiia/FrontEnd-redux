@@ -1,16 +1,64 @@
 import Button from "components/Button/Button";
-import "./styles.css";
 import { useState } from "react";
 import {
   FeedbackContainer,
-  FeedbackButtonContainer,
+  LikeDislikeContainer,
   FeedbackResultContainer,
-  FeedbackResetButton,
+  Result
+ 
 } from "./styles";
+
+//9 , 10
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { feedbackAction, feedbackSelectors } from "store/redux/feedback/feedbackSlice";
 
 
 function Feedback() {
-  const [like, setLikeCount] = useState<number>(0);
+  //11
+  /* const feedbackLike = useAppSelector(feedbackSelectors.fedbackLike)
+  const feedbackDeslike = useAppSelector(feedbackSelectors.feedbackDislake) */
+  const { likes, dislikes } = useAppSelector(feedbackSelectors.feedbackData);
+
+  //12
+  const dispatch = useAppDispatch()
+
+  const onLike = () => {
+    dispatch(feedbackAction.like())
+  }
+
+  const onDislike = () => {
+    dispatch (feedbackAction.dislikes())
+  }
+
+  const onReset = () => {
+    dispatch (feedbackAction.reset())
+  }
+
+
+  return (
+    <FeedbackContainer>
+      <FeedbackResultContainer>
+        <LikeDislikeContainer>
+          <Result>{likes}</Result>
+          <Button name="LIKE" type="button" onClick={onLike} />
+        </LikeDislikeContainer>
+        <LikeDislikeContainer>
+          <Result>{dislikes}</Result>
+          <Button name="DISLIKE" type="button" onClick={onDislike} />
+        </LikeDislikeContainer>
+      </FeedbackResultContainer>
+      <Button name="RESET RESULTS" type="button" onClick={onReset} />
+    </FeedbackContainer>
+  );
+}
+
+export default Feedback;
+
+
+
+
+
+/*   const [like, setLikeCount] = useState<number>(0);
   const [dislike, setDislikeCount] = useState<number>(0);
 
   const likeClick = (): void => {
@@ -23,28 +71,9 @@ function Feedback() {
     setDislikeCount((prevStateDislike) => {
       return prevStateDislike + 1;
     });
-  };
+  }; */
 
-  const resetResults = (): void => {
-    setLikeCount(0);
+/*   const resetResults = (): void => {
+    feedbackLike(0);
     setDislikeCount(0);
-  };
-
-  return (
-    <FeedbackContainer>
-      <FeedbackResultContainer>{like}</FeedbackResultContainer>
-      <FeedbackButtonContainer>
-        <Button name="Like" type="button" onClick={likeClick} />
-      </FeedbackButtonContainer>
-      <FeedbackButtonContainer>
-        <Button name="Dislike" type="button" onClick={dislikeClick} />
-      </FeedbackButtonContainer>
-      <FeedbackResultContainer>{dislike}</FeedbackResultContainer>
-      <FeedbackResetButton>
-        <Button name="Reset Results" type="button" onClick={resetResults} />
-      </FeedbackResetButton>
-    </FeedbackContainer>
-  );
-}
-
-export default Feedback;
+  }; */
